@@ -34,9 +34,9 @@ namespace CAP4053.Student
             public abstract void Update();
             public void OnScannedRobotHandler(ScannedRobotEvent e) {
                 // Ignore our teammates if scanned
-                if (e.Name == "WreckItRalph (1)" || e.Name == "WreckItRalph (2)" || e.Name == "TrevBot (1)" || e.Name == "TrevBot (2)") 
+                if (e.Name == "CAP4053.Benchmark.WreckItRalph (1)" || e.Name == "CAP4053.Benchmark.WreckItRalph (2)" || e.Name == "CAP4053.Benchmark.TrevBot (1)" || e.Name == "CAP4053.Benchmark.TrevBot (2)")
                     return;
-
+                
                 lastKnownLocation = e;
                 enemyFound = true;
                 finalCountdown = initCountdown;

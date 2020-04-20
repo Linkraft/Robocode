@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>CAP4053.Student</RootNamespace>
-    <AssemblyName>Clobberin' Time</AssemblyName>
+    <AssemblyName>ClobberinTime</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
