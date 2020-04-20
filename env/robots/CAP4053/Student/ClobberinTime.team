@@ -1,0 +1,7 @@
+#Robocode robot team
+#Sun Apr 19 22:54:15 EDT 2020
+team.members=CAP4053.Student.TrevBot,CAP4053.Student.TrevBot,CAP4053.Student.WreckItRalph,CAP4053.Student.WreckItRalph
+team.author.name=
+robocode.version=1.9.3.3
+team.description=TrevBot leader with one TrevBot and two WreckItRalph followers
+team.version=1

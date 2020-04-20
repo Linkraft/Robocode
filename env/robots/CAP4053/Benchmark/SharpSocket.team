@@ -1,0 +1,7 @@
+#Robocode robot team
+#Sun Apr 19 22:58:27 EDT 2020
+team.members=CAP4053.Benchmark.FailBotSharp,CAP4053.Benchmark.FailBotSharp,CAP4053.Benchmark.FailBotSharp,CAP4053.Benchmark.FailBotSharp
+team.author.name=
+robocode.version=1.9.3.3
+team.description=A FailBotSharp leader with three FailBotSharp followers. Note\: They do \nnot differentiate between friend and foe.
+team.version=1
