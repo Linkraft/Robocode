@@ -12,9 +12,9 @@ using System.Transactions;
 
 namespace CAP4053.Student 
 {
-    public class StateMachine
+    public class StateMachine 
     {
-        public abstract class State
+        public abstract class State 
         {
             public TeamRobot r;
             public bool enemyFound;
@@ -62,16 +62,15 @@ namespace CAP4053.Student
                 // Employ Stop and GO movement to confuse enemy tracking
                 if (enemyEnergy > (enemyEnergy = e.Energy)) r.SetAhead(movementDistance);
             }
-            // Adjusts the angle so the robot turns the least amount possible
-            public double smallestAngle(double heading)
+            public double smallestAngle(double heading) 
             {
+                // Calculate the smallest version of an angle (i.e. 270 degrees = -90 degrees)
                 double newHeading = heading;
                 if (newHeading > Math.PI) newHeading -= (2 * Math.PI);
                 else if (newHeading < -Math.PI) newHeading += (2 * Math.PI);
                 return newHeading;
             }
-            // Reverse direction if we bump into a wall
-            public void HitWallHandler(HitWallEvent e)
+            public void HitWallHandler(HitWallEvent e) 
             {
                 direction = -direction;
             }
@@ -83,7 +82,7 @@ namespace CAP4053.Student
         Queue<Event> events;
         int[,] transitions; // transition[#s][#i] = #s
 
-        public void Init(TeamRobot robot)
+        public void Init(TeamRobot robot) 
         {
             // Initialize the starting states
             Scan scan = new Scan();
@@ -118,8 +117,7 @@ namespace CAP4053.Student
             transitions[2, 1] = 1;  // Defensive + highEnergy == Offensive
             transitions[2, 2] = 2;  // Defensive + !highEnergy == Defensive
         }
-
-        public void Update()
+        public void Update() 
         {
             // Update the state
             current.Update();
@@ -135,8 +133,7 @@ namespace CAP4053.Student
             // Update the input based on knowledge gained in this update
             UpdateInput();
         }
-
-        public void UpdateInput()
+        public void UpdateInput() 
         {
             // This allows the program to give consideration to two conditions:
             // if the enemy has been found and if health of the player >= 50%
@@ -146,12 +143,10 @@ namespace CAP4053.Student
             if (enemyFound) input = highEnergy ? 1 : 2; // Offensive (1) or Defensive (2)...
             else input = 0; // ...or switch to Scan (0) if we don't know where the enemy is
         }
-
         public void EnqueueEvent(Event e) {
             events.Enqueue(e); 
         }
-
-        public void Transition()
+        public void Transition() 
         {
             int state = 0;
             for (int i = 0; i < states.Count; i++) 
@@ -171,33 +166,31 @@ namespace CAP4053.Student
                 r.SetTurnRadarRight(45);
             }
         }
-
         public class Offensive : State
         {
-            public override void Init(ref TeamRobot robot)
+            public override void Init(ref TeamRobot robot) 
             {
                 r = robot;
                 finalCountdown = initCountdown;
                 enemyFound = true;
             }
-            public override void Update()
+            public override void Update() 
             {
                 // Employ countdown to go back to Scan if we lost track of the enemy
                 finalCountdown -= 1;
                 if (finalCountdown == 0) enemyFound = false;
             }
         }
-
         public class Defensive : State
         {
-            public override void Init(ref TeamRobot robot)
+            public override void Init(ref TeamRobot robot) 
             {
                 r = robot;
                 enemyFound = true;
             }
-            public override void Update()
+            public override void Update() 
             {
-                if (lastKnownLocation != null)
+                if (lastKnownLocation != null) 
                 {
                     // Fire at enemy only if we can reliably hit them
                     if (lastKnownLocation.Distance >= reliableDistance) fireAtEnemy = false;
@@ -214,7 +207,6 @@ namespace CAP4053.Student
             }
         }
     }
-
     public class WreckItRalph : TeamRobot
     {
         private StateMachine fsm;
@@ -230,20 +222,18 @@ namespace CAP4053.Student
             // Let the Finite State Machine handle the rest
             fsm = new StateMachine();
             fsm.Init(this);
-            while (true)
+            while (true) 
             {
                 fsm.Update();
                 Execute();
                 fsm.Transition();
             }
         }
-
-        public override void OnScannedRobot(ScannedRobotEvent evnt)
+        public override void OnScannedRobot(ScannedRobotEvent evnt) 
         {
             fsm.EnqueueEvent(evnt);
         }
-
-        public override void OnHitWall(HitWallEvent evnt)
+        public override void OnHitWall(HitWallEvent evnt) 
         {
             fsm.EnqueueEvent(evnt);
         }
